@@ -65,4 +65,4 @@ For Redirect HTTP to HTTPS
 
 Application AWS URL
 
-    https://flask-env.eba-gxpkbtme.eu-central-1.elasticbeanstalk.com/
+    https://flask-app-env.eba-i3bqvazk.eu-west-1.elasticbeanstalk.com/
