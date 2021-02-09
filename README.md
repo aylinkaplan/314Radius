@@ -6,40 +6,41 @@
 
 # Installation
 ```
-pip install -r requirements.txt 
+> pip install -r requirements.txt 
 ```
 
-#Run and Test Code
+Run and Test Code
 
 ```
-python application.py 
-python test_application.py
+> python application.py 
+> python test_application.py
 ```
 
-Example with curl:
+Examples with curl:
 ```
-curl --header "Content-Type: application/json" --request POST --data '["John", "Smith", "1985-12-04", "Back to the Future" ]' http://0.0.0.0:8080/list 
-curl --header "Content-Type: application/json" --request POST --data '{"first_name":"John", "last_name":"Smith", "d_o_b":"1985-12-04", "favorite_film":"Back to the Future" }' http://0.0.0.0:8080/json 
-```
-
-#Deployment to AWS Beanstalk
-
-```
-eb init -p python-3.6 flask-tutorial --region eu-central-1
-eb create flask-env
-eb open
+> curl --header "Content-Type: application/json" --request POST --data '["John", "Smith", "1985-12-04", "Back to the Future" ]' http://0.0.0.0:8080/list 
+> curl --header "Content-Type: application/json" --request POST --data '{"first_name":"John", "last_name":"Smith", "d_o_b":"1985-12-04", "favorite_film":"Back to the Future" }' http://0.0.0.0:8080/json 
 ```
 
-#Self-signed certificate
+Deployment to AWS Beanstalk
+
 ```
-eb ssh
-openssl genrsa 2048 > privatekey.pem
-openssl req -new -key privatekey.pem -out csr.pem
-openssl x509 -req -days 365 -in csr.pem -signkey privatekey.pem -out public.crt
-aws iam upload-server-certificate --server-certificate-name elastic-beanstalk --certificate-body file://public.crt --private-key file://privatekey.pem
+> eb init -p python-3.6 flask-tutorial --region eu-central-1
+> eb create flask-env
+> eb open
 ```
 
-#Configure EBS to terminate HTTPS
+Self-signed Certificate
+```
+> eb ssh
+> openssl genrsa 2048 > privatekey.pem
+> openssl req -new -key privatekey.pem -out csr.pem
+> openssl x509 -req -days 365 -in csr.pem -signkey privatekey.pem -out public.crt
+> aws iam upload-server-certificate --server-certificate-name elastic-beanstalk --certificate-body file://public.crt --private-key file://privatekey.pem
+```
+
+Configure EBS to terminate HTTPS
+
 For Classic Load Balancer:
 
     a.Choose Add listener.
@@ -56,5 +57,12 @@ For Classic Load Balancer:
 
     d.Choose Apply.
 
-#Application AWS URL
-https://flask-env-v6.eba-gxpkbtme.eu-central-1.elasticbeanstalk.com/
+For Redirect HTTP to HTTPS
+
+    Add this file to .ebextensions folder:
+    https://github.com/awsdocs/elastic-beanstalk-samples/blob/master/configuration-files/aws-provided/security-configuration/https-redirect/python/https-redirect-python.config
+
+
+Application AWS URL
+
+    https://flask-env.eba-gxpkbtme.eu-central-1.elasticbeanstalk.com/
